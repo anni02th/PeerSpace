@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - CampusConnect</title>
+      {% else %}
+      <title>Welcome to CampusConnect</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>CampusConnect: <a href="/index">Home</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>

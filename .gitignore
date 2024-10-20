@@ -5,3 +5,4 @@ __pycache__/
 .cph
 config.py
 app.db
+.env

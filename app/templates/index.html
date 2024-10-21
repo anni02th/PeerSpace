@@ -1,29 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Hi, {{ current_user.username }}!</h1>
-{% if form %}
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.post.label }} <br>
-        {{ form.post(cols=32, rows=4) }} <br>
-        {% for error in form.post.errors %}
-        <span style="color: red;">
-            {{ error }}
-        </span>
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">Welcome, {{ current_user.username }}!</h1>
+    
+    {% if form %}
+    <div class="mb-8">
+        <form action="" method="post" class="relative">
+            {{ form.hidden_tag() }}
+            <div class="flex items-center space-x-3">
+                {{ form.post(cols=30, rows=1, class="block w-full resize-none border border-gray-300 rounded-lg py-2 px-3 sm:text-sm", placeholder="What's on your mind?") }}
+                {{ form.submit(class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-md hover:bg-blue-500 cursor-pointer") }}
+            </div> 
+    </div>
+    {% endif %}
+
+    <div class="space-y-4">
+        {% for post in posts %}
+        <div class="border-b-2 pb-2">
+            {% include '_post.html' %}
+        </div>
         {% endfor %}
-    </p>
-    <p>{{ form.submit() }}</p>
-</form>
-{% endif %}
-{% for post in posts %}
-{% include '_post.html' %}
-{% endfor %}
-{% if prev_url %}
-    <a href="{{ prev_url }}">Newer posts</a>
-    {% endif %}
-    {% if next_url %}
-    <a href="{{ next_url }}">Older posts</a>
-    {% endif %}
+    </div>
+
+    <div class="mt-8 flex justify-between">
+        {% if prev_url %}
+        <a href="{{ prev_url }}" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Newer posts
+        </a>
+        {% else %}
+        <div></div>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Older posts
+        </a>
+        {% endif %}
+    </div>
+</div>
+
 {% endblock %}

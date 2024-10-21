@@ -1,44 +1,87 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table>
-    <tr style="vertical-align: top;">
-        <td>
-            <img src="{{ user.avatar(128) }}">
-        </td>
-        <td>
-            <h1>User: {{ user.username }}</h1>
-            {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-            {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
-            <p>{{ user.followers_count() }} followers, {{ user.following_count() }} following.</p>
-            {% if user == current_user %}
-            <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-            {% elif not current_user.is_following(user) %}
-            <p>
-            <form action="{{ url_for('follow', username=user.username) }}" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.submit(value='Follow') }}
-            </form>
-            </p>
-            {% else %}
-            <p>
-            <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.submit(value='Unfollow') }}
-            </form>
-            </p>
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
+
+    <div class="relative h-32 w-full bg-gray-100 rounded-md shadow-sm mb-6">
+        <div id="cover-photo" class="h-full w-full rounded-md"></div>
+        <div class="absolute -bottom-10 left-6">
+            <img src="{{ user.avatar(128) }}" alt="User avatar"
+                class="w-20 h-20 rounded-full shadow-md border-4 border-white">
+        </div>
+    </div>
+
+    <div class="mt-14 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ user.username }}</h1>
+
+            {% if user.about_me %}
+            <p class="mt-2 text-base text-gray-600 truncate max-w-xs sm:max-w-md">{{ user.about_me }}</p>
             {% endif %}
-        </td>
-    </tr>
-</table>
-<hr>
-{% for post in posts %}
-{% include '_post.html' %}
-{% endfor %}
-{% if prev_url %}
-<a href="{{ prev_url }}">Newer posts</a>
-{% endif %}
-{% if next_url %}
-<a href="{{ next_url }}">Older posts</a>
-{% endif %}
+
+            {% if user.last_seen %}
+            <p class="mt-2 text-sm text-gray-500">Last seen: {{ user.last_seen }}</p>
+            {% endif %}
+        </div>
+
+
+        <div
+            class="mt-4 sm:mt-0 flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <div class="flex items-center space-x-6 text-base font-medium text-gray-700">
+                <p>{{ user.followers_count() }} <span class="text-gray-500">followers</span></p>
+                <p>{{ user.following_count() }} <span class="text-gray-500">following</span></p>
+            </div>
+
+            <div class="flex space-x-3">
+                {% if user == current_user %}
+                <a href="{{ url_for('edit_profile') }}"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-md hover:bg-blue-500">Edit
+                    Profile</a>
+                {% elif not current_user.is_following(user) %}
+                <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-md hover:bg-blue-500">Follow</button>
+                </form>
+                {% else %}
+                <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    <button type="submit"
+                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium shadow-md hover:bg-gray-400">Unfollow</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 space-y-6">
+        {% for post in posts %}
+        <div class="border-b-2 pb-2">
+            {% include '_post.html' %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-8 flex justify-between">
+        {% if prev_url %}
+        <a href="{{ prev_url }}"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Newer
+            posts</a>
+        {% else %}
+        <div></div>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Older
+            posts</a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    var username = "{{ user.username }}";
+    var pattern = GeoPattern.generate(username);
+    document.getElementById('cover-photo').style.backgroundImage = pattern.toDataUrl();
+</script>
 {% endblock %}

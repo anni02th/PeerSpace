@@ -21,7 +21,7 @@
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <span class="text-white text-xl font-bold">PeerSpace</span>
+                            <a href="{{ url_for('index') }}" class="text-white text-xl font-bold hover:text-gray-300">PeerSpace</a>
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
@@ -31,13 +31,13 @@
                                 <a href="{{ url_for('login') }}"
                                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
                                 {% else %}
-                                <a href="{{ url_for('logout') }}"
-                                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
-                                <a href="{{ url_for('user', username=current_user.username) }}"
-                                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
-                                {% endif %}
                                 <a href="{{ url_for('explore') }}"
                                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Explore</a>
+                                <a href="{{ url_for('user', username=current_user.username) }}"
+                                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                                <a href="{{ url_for('logout') }}"
+                                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -72,13 +72,13 @@
                     <a href="{{ url_for('login') }}"
                         class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
                     {% else %}
-                    <a href="{{ url_for('logout') }}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Logout</a>
-                    <a href="{{ url_for('user', username=current_user.username) }}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profile</a>
-                    {% endif %}
                     <a href="{{ url_for('explore') }}"
                         class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Explore</a>
+                    <a href="{{ url_for('user', username=current_user.username) }}"
+                        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profile</a>
+                    <a href="{{ url_for('logout') }}"
+                        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Logout</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>

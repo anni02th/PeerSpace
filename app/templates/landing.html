@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen py-12 bg-gradient-to-b from-gray-50 to-gray-100 text-center">
+    <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Welcome to PeerSpace</h1>
+    <p class="text-lg text-gray-600 mb-6">A minimal microblogging platform where users can post their thoughts in 140 characters.</p>
+
+    <div class="flex space-x-4">
+        <a href="{{ url_for('login') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg font-semibold transition-colors duration-300">
+            Join PeerSpace
+        </a>
+        <a href="https://github.com/aditya-borse/PeerSpace" target="_blank" class="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg font-semibold transition-colors duration-300">
+            View on GitHub
+        </a>
+    </div>
+</div>
+{% endblock %}
